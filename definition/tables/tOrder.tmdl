@@ -1,0 +1,108 @@
+table tOrder
+	lineageTag: e8f50251-8a85-4402-98e6-d29fd251d3e9
+
+	column order_id
+		dataType: string
+		lineageTag: d56d4bee-53a8-4ae5-8017-d6ad0f639f1d
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column outlet_id
+		dataType: string
+		lineageTag: 5d2ad29d-44c1-41e3-bc9a-e15ebf92652f
+		summarizeBy: none
+		sourceColumn: outlet_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 53ae783f-1209-4037-90cd-6465eaf2f596
+		summarizeBy: none
+		sourceColumn: order_date
+
+		variation Variation
+			isDefault
+			relationship: f3069eb3-e005-49fe-bcb7-b4248cd497c2
+			defaultHierarchy: LocalDateTable_39bb0206-5034-458f-8d1a-1bab5edb1bee.'Hierarki Tanggal'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column order_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bff03200-5b55-4609-945e-9664e7c63e63
+		summarizeBy: none
+		sourceColumn: order_time
+
+		variation Variation
+			isDefault
+			relationship: a37531f6-b835-4843-818b-f6fdc961b432
+			defaultHierarchy: LocalDateTable_448bc932-06bb-48f8-a289-ee9cb57d103a.'Hierarki Tanggal'
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount
+		dataType: int64
+		formatString: 0
+		lineageTag: 06651ccb-88f6-43c0-9be9-9ec68214b319
+		summarizeBy: sum
+		sourceColumn: total_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		lineageTag: 43697909-80c9-4268-99cd-a4964655b078
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_type
+		dataType: string
+		lineageTag: ab85761d-7670-423a-b469-50c19529eca0
+		summarizeBy: none
+		sourceColumn: order_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column staff_id
+		dataType: string
+		lineageTag: 209dacb5-6a8b-4f6a-b67c-55ca5439822a
+		summarizeBy: none
+		sourceColumn: staff_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour = HOUR(tOrder[order_time])
+		formatString: 0
+		lineageTag: 92fcfa47-122f-4ab2-8090-f1afe97d91b1
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Numb = MONTH(tOrder[order_date])
+		formatString: 0
+		lineageTag: 00b496bc-0ec3-4499-8746-b90d3ba20d2f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tOrder = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("E:\Learn Excel\Datasets\sedukopi\Dataset-F&B-Sedukopi(Jar Kedai Kopi).xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "tOrder", Kind = "Table"]}[Data],
+				  #"Changed column type" = Table.TransformColumnTypes(#"Navigation 1", {{"order_id", type text}, {"outlet_id", type text}, {"order_date", type date}, {"order_time", type datetime}, {"total_amount", Int64.Type}, {"payment_method", type text}, {"order_type", type text}, {"staff_id", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

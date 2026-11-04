@@ -1,0 +1,81 @@
+table tMenuItem
+	lineageTag: b8c487da-91b9-4543-9c47-1ff683b23fdf
+
+	measure 'AOV Kategori' = DIVIDE(SUM(tMenuItem[price]), COUNT(tMenuItem[category]))
+		formatString: "Rp"#,0;-"Rp"#,0;"Rp"#,0
+		lineageTag: 806a428e-fc91-48f6-9a22-ff8a63b9859c
+
+		annotation PBI_FormatHint = {"currencyCulture":"id-ID"}
+
+	column item_id
+		dataType: string
+		lineageTag: 710907db-06c8-44eb-b0ca-07e601154d92
+		summarizeBy: none
+		sourceColumn: item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: a6a00ae4-005d-4990-9564-129c0b6d818e
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: f1c0c790-9dcc-4fe0-a397-04bee8d06759
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: int64
+		formatString: 0
+		lineageTag: bb961c0c-3208-45f7-83e5-024887aa96f5
+		summarizeBy: none
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_price
+		dataType: int64
+		formatString: 0
+		lineageTag: a580b997-3ac1-43aa-81a8-a6eeebdc5ac0
+		summarizeBy: none
+		sourceColumn: cost_price
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_available
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: bdd0e6a8-9b55-4321-99b1-2d6829777f43
+		summarizeBy: none
+		sourceColumn: is_available
+
+		annotation SummarizationSetBy = Automatic
+
+	column calories
+		dataType: int64
+		formatString: 0
+		lineageTag: deb2abe7-11d4-4c75-ab1b-0ea9ef0233c2
+		summarizeBy: none
+		sourceColumn: calories
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tMenuItem = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("E:\Learn Excel\Datasets\sedukopi\Dataset-F&B-Sedukopi(Jar Kedai Kopi).xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "tMenuItem", Kind = "Table"]}[Data],
+				  #"Changed column type" = Table.TransformColumnTypes(#"Navigation 1", {{"item_id", type text}, {"name", type text}, {"category", type text}, {"price", Int64.Type}, {"cost_price", Int64.Type}, {"is_available", type logical}, {"calories", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,30 @@
+model Model
+	culture: id-ID
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-ID
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["tOutlet","tStaff","tOrder","tOrderDetail","tMenuItem","M&OD","Metrics Information"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table tOutlet
+ref table DateTableTemplate_34145a3d-c76d-4dfe-9384-760c1bdedc8a
+ref table LocalDateTable_d7caed05-5dfa-4457-bfbc-e69f35e8c198
+ref table tStaff
+ref table LocalDateTable_8b26ee8b-5782-42f2-b273-4e44ca7a6512
+ref table tOrder
+ref table LocalDateTable_39bb0206-5034-458f-8d1a-1bab5edb1bee
+ref table LocalDateTable_448bc932-06bb-48f8-a289-ee9cb57d103a
+ref table tOrderDetail
+ref table tMenuItem
+ref table M&OD
+ref table 'Metrics Information'
+
+ref cultureInfo id-ID
+

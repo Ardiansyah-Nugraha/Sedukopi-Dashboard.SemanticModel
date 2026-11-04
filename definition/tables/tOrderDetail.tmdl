@@ -1,0 +1,74 @@
+table tOrderDetail
+	lineageTag: b045ce85-0928-4df4-b576-87d9c203e1ca
+
+	column detail_id
+		dataType: string
+		lineageTag: b8e75084-4a0f-48d8-8cbb-03682ee2535c
+		summarizeBy: none
+		sourceColumn: detail_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 4a2ede1a-260e-4a7c-9aa1-bd1347cccbbd
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_id
+		dataType: string
+		lineageTag: 698aca74-2d68-4fde-b829-3b5b2d33ba3b
+		summarizeBy: none
+		sourceColumn: item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: int64
+		formatString: 0
+		lineageTag: d45429b4-e71a-4258-9bec-85ed48ba2f0e
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: c54b19b7-2d40-4ff3-b3ab-9d1b0f977f3e
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column subtotal
+		dataType: int64
+		formatString: 0
+		lineageTag: 82a9fd37-9663-4955-86a9-fe0ae5d72c0f
+		summarizeBy: sum
+		sourceColumn: subtotal
+
+		annotation SummarizationSetBy = Automatic
+
+	column notes
+		dataType: string
+		lineageTag: 8b03b9be-4a2a-49a1-82ae-29b839326452
+		summarizeBy: none
+		sourceColumn: notes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tOrderDetail = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("E:\Learn Excel\Datasets\sedukopi\Dataset-F&B-Sedukopi(Jar Kedai Kopi).xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "tOrderDetail", Kind = "Table"]}[Data],
+				  #"Changed column type" = Table.TransformColumnTypes(#"Navigation 1", {{"detail_id", type text}, {"order_id", type text}, {"item_id", type text}, {"unit_price", Int64.Type}, {"quantity", Int64.Type}, {"subtotal", Int64.Type}, {"notes", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

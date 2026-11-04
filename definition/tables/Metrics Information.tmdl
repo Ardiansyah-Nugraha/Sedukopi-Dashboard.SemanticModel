@@ -1,0 +1,45 @@
+table 'Metrics Information'
+	lineageTag: ba680f11-0572-42b9-8f98-31c995ee4b83
+
+	column 'Metric / Measure'
+		dataType: string
+		lineageTag: 33fa7ce6-850e-46bc-ada2-ff769346b556
+		summarizeBy: none
+		sourceColumn: Metric / Measure
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: b07ba340-0df2-4374-b693-40b5ffe6b44c
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Basic Formula'
+		dataType: string
+		lineageTag: bc4a7b8b-4d5b-4c3a-a482-4881c4db4fa1
+		summarizeBy: none
+		sourceColumn: Basic Formula
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Chart type'
+		dataType: string
+		lineageTag: 1abbf4ea-6814-4533-8248-19fee7a63bf8
+		summarizeBy: none
+		sourceColumn: Chart type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Metrics Information' = m
+		mode: import
+		source =
+				let
+				  Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("hZBLCsJADECvErqUimfQCkWwKChuRCRtpzpQJ5pkFt7e6UesUnATmGTey+d4jDKjbIsojtLsEKJ3Vs/3kDGTh0enVp8huyuIDSTIZQxr60wMC+QQyHmF5Iqs0SluXCieTQC2TJVVSJlEwlN8rqRYTwuSXj9i/TL1U/WiDPli3Y8YZtAN/RF9w/PNoVss/Gz7g/O33DBQBcSlYRmD3zvsW2LP6AQLtdS0T8g7bXCs607x37CjuoSVmpv8CqSp2L4yvMZyeNjTCw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Metric / Measure" = _t, Name = _t, #"Basic Formula" = _t, #"Chart type" = _t])
+				in
+				  Source
+
+	annotation PBI_ResultType = Table
+

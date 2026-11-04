@@ -1,0 +1,80 @@
+table tStaff
+	lineageTag: 7e5e4bed-fb62-47a5-b60c-a10f523be5be
+
+	column staff_id
+		dataType: string
+		lineageTag: 82af514c-fa29-487f-9b70-20466cb1d8c6
+		summarizeBy: none
+		sourceColumn: staff_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: c8faf248-6aa9-49ad-92cb-49f22edb77e9
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column role
+		dataType: string
+		lineageTag: d30426f9-55af-43aa-be1e-509a93e6b770
+		summarizeBy: none
+		sourceColumn: role
+
+		annotation SummarizationSetBy = Automatic
+
+	column outlet_id
+		dataType: string
+		lineageTag: ab8e88a1-395a-47f1-bdf3-d6e20506877e
+		summarizeBy: none
+		sourceColumn: outlet_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column hire_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bd8fb8f3-a5a9-490f-b0bc-a22eb5496424
+		summarizeBy: none
+		sourceColumn: hire_date
+
+		variation Variation
+			isDefault
+			relationship: 58589e68-9641-4fb8-a795-705b52f735fa
+			defaultHierarchy: LocalDateTable_8b26ee8b-5782-42f2-b273-4e44ca7a6512.'Hierarki Tanggal'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column monthly_salary
+		dataType: int64
+		formatString: 0
+		lineageTag: 6938e996-cf5e-4e66-96a9-b7ff37fb787f
+		summarizeBy: sum
+		sourceColumn: monthly_salary
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 26b3287a-6b77-4eaf-b2dd-77373827d6f9
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tStaff = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("E:\Learn Excel\Datasets\sedukopi\Dataset-F&B-Sedukopi(Jar Kedai Kopi).xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "tStaff", Kind = "Table"]}[Data],
+				  #"Changed column type" = Table.TransformColumnTypes(#"Navigation 1", {{"staff_id", type text}, {"name", type text}, {"role", type text}, {"outlet_id", type text}, {"hire_date", type date}, {"monthly_salary", Int64.Type}, {"status", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

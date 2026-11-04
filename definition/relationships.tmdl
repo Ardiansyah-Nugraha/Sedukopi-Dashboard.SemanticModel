@@ -1,0 +1,57 @@
+relationship 9237eb02-8b3b-41df-9d89-5662535a2fe6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: tOutlet.opening_date
+	toColumn: LocalDateTable_d7caed05-5dfa-4457-bfbc-e69f35e8c198.Date
+
+relationship 58589e68-9641-4fb8-a795-705b52f735fa
+	joinOnDateBehavior: datePartOnly
+	fromColumn: tStaff.hire_date
+	toColumn: LocalDateTable_8b26ee8b-5782-42f2-b273-4e44ca7a6512.Date
+
+relationship f3069eb3-e005-49fe-bcb7-b4248cd497c2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: tOrder.order_date
+	toColumn: LocalDateTable_39bb0206-5034-458f-8d1a-1bab5edb1bee.Date
+
+relationship a37531f6-b835-4843-818b-f6fdc961b432
+	joinOnDateBehavior: datePartOnly
+	fromColumn: tOrder.order_time
+	toColumn: LocalDateTable_448bc932-06bb-48f8-a289-ee9cb57d103a.Date
+
+relationship AutoDetected_033192a9-a370-4cec-a5db-2f3ac3f19cf4
+	isActive: false
+	fromColumn: tStaff.outlet_id
+	toColumn: tOutlet.outlet_id
+
+relationship AutoDetected_8dd274e1-e3be-43c7-88e7-b190875d6785
+	fromColumn: tOrder.outlet_id
+	toColumn: tOutlet.outlet_id
+
+relationship AutoDetected_626f51d8-e084-42be-b932-f43aa3efecc9
+	fromColumn: tOrder.staff_id
+	toColumn: tStaff.staff_id
+
+relationship AutoDetected_a47e83c9-5e5f-4e26-ab52-7143ae202dc1
+	isActive: false
+	fromColumn: tOrderDetail.order_id
+	toColumn: tOrder.order_id
+
+relationship AutoDetected_ddf60e06-9835-4511-99b2-3818ee6db081
+	isActive: false
+	fromColumn: tOrderDetail.item_id
+	toColumn: tMenuItem.item_id
+
+relationship AutoDetected_b0f40184-8dfb-4587-9a2f-e15ac67db240
+	fromColumn: M&OD.order_id
+	toColumn: tOrder.order_id
+
+relationship AutoDetected_75e93a7c-0f66-493e-94a4-9de5959ee85a
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: M&OD.detail_id
+	toColumn: tOrderDetail.detail_id
+
+relationship AutoDetected_f107d6da-b348-4a20-acd0-5cb61a3a47cd
+	fromColumn: M&OD.item_id
+	toColumn: tMenuItem.item_id
+

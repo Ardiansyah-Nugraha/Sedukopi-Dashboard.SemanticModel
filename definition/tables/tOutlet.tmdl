@@ -1,0 +1,104 @@
+table tOutlet
+	lineageTag: 77be325a-76c2-47ec-a24f-925919a8400f
+
+	column outlet_id
+		dataType: string
+		lineageTag: 2e80ec15-5e35-44aa-a650-d7117c611a94
+		summarizeBy: none
+		sourceColumn: outlet_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 9838957b-8feb-4f85-865f-82ed0958b504
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column locate
+		dataType: string
+		lineageTag: 60801132-9b4a-4826-b91e-067dec7e767c
+		summarizeBy: none
+		sourceColumn: locate
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 532146c6-19f8-4123-a886-94539736fab7
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column province
+		dataType: string
+		lineageTag: 34656d69-a618-4475-92cb-9b44b90378e0
+		summarizeBy: none
+		sourceColumn: province
+
+		annotation SummarizationSetBy = Automatic
+
+	column address
+		dataType: string
+		lineageTag: 53f009b7-5419-46cb-ab6b-003c39ff1690
+		summarizeBy: none
+		sourceColumn: address
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_name
+		dataType: string
+		lineageTag: 7c8bd41f-f306-49ef-84dd-4a8ba1b3ec57
+		summarizeBy: none
+		sourceColumn: manager_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column opening_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fab41189-5c22-477f-85ed-9117e82ccf7b
+		summarizeBy: none
+		sourceColumn: opening_date
+
+		variation Variation
+			isDefault
+			relationship: 9237eb02-8b3b-41df-9d89-5662535a2fe6
+			defaultHierarchy: LocalDateTable_d7caed05-5dfa-4457-bfbc-e69f35e8c198.'Hierarki Tanggal'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status
+		dataType: string
+		lineageTag: dc29a816-8d9e-4eb5-9eae-c06a95c7ff6f
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column seating_capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: 8afb0d62-e79e-4101-bf1d-b4705075e875
+		summarizeBy: sum
+		sourceColumn: seating_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tOutlet = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("E:\Learn Excel\Datasets\sedukopi\Dataset-F&B-Sedukopi(Jar Kedai Kopi).xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "tOutlet", Kind = "Table"]}[Data],
+				  #"Changed column type" = Table.TransformColumnTypes(#"Navigation 1", {{"outlet_id", type text}, {"name", type text}, {"locate", type text}, {"city", type text}, {"province", type text}, {"address", type text}, {"manager_name", type text}, {"opening_date", type date}, {"status", type text}, {"seating_capacity", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+
